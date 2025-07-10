@@ -13,7 +13,7 @@ using OpenTelemetry.Trace;
 
 var standardForegroundColor = ConsoleColor.White;
 Console.ForegroundColor = standardForegroundColor;
-Console.WriteLine("***** Testes com Semantic Kernel + Plugins (Kernel Functions) + MCP *****");
+Console.WriteLine("***** Testes com Semantic Kernel + Plugins (Kernel Functions) + MCP Azure *****");
 Console.WriteLine();
 
 var aiSolution = InputHelper.GetAISolution();
@@ -38,7 +38,6 @@ var traceProvider = Sdk.CreateTracerProviderBuilder()
     .UseGrafana()
     .Build();
 
-#pragma warning disable SKEXP0070 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 var kernelBuilder = Kernel.CreateBuilder();
 PromptExecutionSettings settings;
@@ -76,12 +75,14 @@ await using var mcpClient = await McpClientFactory.CreateAsync(new SseClientTran
     Endpoint = new Uri(configuration["MCP:Endpoint"]!)
 }));
 
-Console.WriteLine($"Ferramentas do MCP:");
-Console.ForegroundColor = ConsoleColor.Green;
+Console.Write("Ferramentas do MCP: ");
+Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine($"***** {mcpName} *****");
+Console.WriteLine();
 var tools = await mcpClient.ListToolsAsync().ConfigureAwait(false);
 Console.WriteLine($"Quantidade de ferramentas disponiveis = {tools.Count}");
 Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.Green;
 foreach (var tool in tools)
 {
     Console.WriteLine($"* {tool.Name}: {tool.Description}");
@@ -126,4 +127,3 @@ while (true)
 }
 
 #pragma warning restore SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-#pragma warning restore SKEXP0070 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

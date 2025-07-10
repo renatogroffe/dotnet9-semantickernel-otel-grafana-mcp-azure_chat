@@ -10,7 +10,7 @@ public static class OpenTelemetryExtensions
 
     static OpenTelemetryExtensions()
     {
-        ServiceName = "ConsoleAppChatAIProdutos";
+        ServiceName = "ConsoleAppChatAIMCP";
         ServiceVersion = typeof(OpenTelemetryExtensions).Assembly.GetName().Version!.ToString();
         ActivitySource = new ActivitySource(ServiceName, ServiceVersion);
     }
